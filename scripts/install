@@ -99,6 +99,7 @@ ynh_app_setting_set $app port $port
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
+ynh_print_info "Download Shinken..."
 
 ynh_app_setting_set $app final_path $final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -107,6 +108,7 @@ ynh_setup_source "$final_path"
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
+ynh_print_info "Create User..."
 
 # Create a system user
 ynh_system_user_create $app
@@ -119,7 +121,7 @@ ynh_print_info "Install Shinken..."
 pushd $final_path
 python setup.py install
 shinken --init
-shinken install webgui2
+shinken install webui2
 pip install pymongo
 popd
 
