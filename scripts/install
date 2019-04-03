@@ -124,7 +124,7 @@ shinken --init
 shinken install webui2
 shinken install mod-mongodb
 shinken install auth-cfg-password
-pip install pymongo
+pip install pymongo arrow passlib bottle==0.12.8
 popd
 
 #=================================================
