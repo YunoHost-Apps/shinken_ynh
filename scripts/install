@@ -137,7 +137,9 @@ ynh_add_nginx_config
 #=================================================
 # MODIFY A CONFIG FILE
 #=================================================
-#cp -a ../conf/onlyoffice-documentserver.conf /etc/onlyoffice/documentserver/nginx/onlyoffice-documentserver.conf
+cp -a ../conf/broker-master.cfg /etc/shinken/brokers/broker-master.cfg
+cp -a ../conf/shinken.cfg /etc/shinken/shinken.cfg
+cp -a ../conf/webui2.cfg /etc/shinken/modules/webui2.cfg
 #ynh_replace_string "modules" "modules	webgui2" "/etc/shinken/brokers/broker-master.cfg"
 #ynh_replace_string "__PASSWORD__" "$password" "/etc/loolwsd/loolwsd.xml"
 
@@ -164,7 +166,7 @@ ynh_add_nginx_config
 ### that really need such authorization.
 
 # Set permissions to app files
-#chown -R root: /etc/loolwsd
+chown $app:$app /var/log/shinken
 
 
 #=================================================
