@@ -122,6 +122,7 @@ pushd $final_path
 python setup.py install
 shinken --init
 shinken install webui2
+shinken install mod-mongodb
 pip install pymongo
 popd
 
