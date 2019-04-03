@@ -123,6 +123,7 @@ python setup.py install
 shinken --init
 shinken install webui2
 shinken install mod-mongodb
+shinken install auth-cfg-password
 pip install pymongo
 popd
 
