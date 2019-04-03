@@ -1,6 +1,8 @@
 # Shinken app for YunoHost
 Shinken Server
 
+# NOT WORK IS IN DEV
+
 **Shipped version:** 2.4.3
 
 - [Yunohost project](https://yunohost.org)
