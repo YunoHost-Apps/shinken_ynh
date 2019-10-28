@@ -3,8 +3,8 @@
     "id": "shinken",
     "packaging_format": 1,
     "description": {
-        "en": "Shinken package for YunoHost.",
-        "fr": "Shinken pour YunoHost."
+        "en": "A flexible and scalable monitoring framework",
+        "fr": "Un framework de monitoring flexible et scalable"
     },
     "version": "2.4.3",
     "url": "https://github.com/naparuba/shinken",
