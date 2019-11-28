@@ -51,20 +51,20 @@ final_path=/opt/$app
 test ! -e "$final_path" || ynh_die "This path already contains a folder"
 
 # Normalize the url path syntax
-path_url=$(ynh_normalize_url_path $path_url)
+path_url=$(ynh_normalize_url_path "$path_url")
 
 # Check web path availability
-ynh_webpath_available $domain $path_url
+ynh_webpath_available "$domain" "$path_url"
 # Register (book) web path
-ynh_webpath_register $app $domain $path_url
+ynh_webpath_register "$app" "$domain" "$path_url"
 
 #=================================================
 # STORE SETTINGS FROM MANIFEST
 #=================================================
 
-ynh_app_setting_set $app domain $domain
-ynh_app_setting_set $app path $path_url
-ynh_app_setting_set $app is_public $is_public
+ynh_app_setting_set "$app" domain "$domain"
+ynh_app_setting_set "$app" path "$path_url"
+ynh_app_setting_set "$app" is_public "$is_public"
 
 #=================================================
 # INSTALL DEPENDENCIES
@@ -93,15 +93,15 @@ ynh_install_app_dependencies python-pip python-pycurl python-cherrypy3
 # Find a free port
 port=$(ynh_find_port 7767)
 # Open this port
-yunohost firewall allow --no-upnp TCP $port 2>&1
-ynh_app_setting_set $app port $port
+yunohost firewall allow --no-upnp TCP "$port" 2>&1
+ynh_app_setting_set "$app" port "$port"
 
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 ynh_print_info "Download Shinken..."
 
-ynh_app_setting_set $app final_path $final_path
+ynh_app_setting_set "$app" final_path "$final_path"
 # Download, check integrity, uncompress and patch the source from app.src
 ynh_setup_source "$final_path"
 
@@ -111,21 +111,21 @@ ynh_setup_source "$final_path"
 ynh_print_info "Create User..."
 
 # Create a system user
-ynh_system_user_create $app
+ynh_system_user_create "$app"
 
 #=================================================
 # INSTALL SHINKEN
 #=================================================
 ynh_print_info "Install Shinken..."
 
-pushd $final_path
+pushd "$final_path" || exit
 python setup.py install
 shinken --init
 shinken install webui2
 shinken install mod-mongodb
 shinken install auth-cfg-password
 pip install pymongo arrow passlib bottle==0.12.8
-popd
+popd || exit
 
 #=================================================
 # NGINX CONFIGURATION
@@ -166,7 +166,7 @@ cp -a ../conf/webui2.cfg /etc/shinken/modules/webui2.cfg
 ### that really need such authorization.
 
 # Set permissions to app files
-chown $app:$app /var/log/shinken
+chown "$app":"$app" /var/log/shinken
 
 
 #=================================================
@@ -174,7 +174,7 @@ chown $app:$app /var/log/shinken
 #=================================================
 
 # If app is public, add url to SSOWat conf as skipped_uris
-if [ $is_public -eq 1 ]; then
+if [ "$is_public" -eq 1 ]; then
   # unprotected_uris allows SSO credentials to be passed anyway.
   ynh_app_setting_set "$app" unprotected_uris "/"
 fi
