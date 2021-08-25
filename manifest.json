@@ -3,10 +3,10 @@
     "id": "shinken",
     "packaging_format": 1,
     "description": {
-        "en": "A flexible and scalable monitoring framework",
-        "fr": "Un framework de monitoring flexible et scalable"
+        "en": "Flexible and scalable monitoring framework",
+        "fr": "Framework de monitoring flexible et scalable"
     },
-    "version": "2.4.3",
+    "version": "2.4.3~ynh1",
     "url": "https://github.com/naparuba/shinken",
     "license": "AGPL-3.0",
     "maintainer": {
@@ -14,44 +14,24 @@
         "email": "liberodark@gmail.com"
     },
     "requirements": {
-        "yunohost": ">= 2.7.2"
+        "yunohost": ">= 4.2.4"
     },
     "multi_instance": false,
     "services": [
         "nginx",
-        "php5-fpm",
+        "php7.3-fpm",
         "mysql"
     ],
     "arguments": {
         "install": [{
                 "name": "domain",
                 "type": "domain",
-                "ask": {
-                    "en": "Choose a domain name for Shinken",
-                    "fr": "Choisissez un nom de domaine pour Shinken"
-                },
                 "example": "example.com"
             },
-
-            {
-                "name": "path",
-                "type": "path",
-                "ask": {
-                    "en": "Choose a path for Shinken / is accepted",
-                    "fr": "Choisissez un chemin pour Shinken / est accepté"
-                },
-                "example": "/",
-                "default": "/"
-            },
-            
             {
                 "name": "is_public",
                 "type": "boolean",
-                "ask": {
-                    "en": "Is it a public site ?",
-                    "fr": "Est-ce un site public ?"
-                },
-                "default": "true"
+                "default": true
             }
         ]
     }
