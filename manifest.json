@@ -18,9 +18,7 @@
     },
     "multi_instance": false,
     "services": [
-        "nginx",
-        "php7.3-fpm",
-        "mysql"
+        "nginx"
     ],
     "arguments": {
         "install": [{
