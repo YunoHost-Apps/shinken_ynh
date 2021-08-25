@@ -5,7 +5,7 @@
 #=================================================
 
 # dependencies used by the app
-pkg_dependencies="python-pip python-pycurl python-cherrypy3"
+pkg_dependencies="python-pip python-pycurl python-cherrypy3 python-setuptools"
 
 #=================================================
 # PERSONAL HELPERS

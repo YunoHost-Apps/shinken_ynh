@@ -65,7 +65,7 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # CREATE DEDICATED USER
 #=================================================
-ynh_script_progression --message="Configuring system user..." --time --weight=1
+ynh_script_progression --message="Configuring system user..." --weight=1
 
 # Create a system user
 ynh_system_user_create --username=$app --home_dir="$final_path"
@@ -73,7 +73,7 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
-ynh_script_progression --message="Setting up source files..." --time --weight=1
+ynh_script_progression --message="Setting up source files..." --weight=1
 
 ynh_app_setting_set --app=$app --key=final_path --value=$final_path
 # Download, check integrity, uncompress and patch the source from app.src
@@ -100,7 +100,7 @@ popd || exit
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Configuring NGINX web server..." --time --weight=1
+ynh_script_progression --message="Configuring NGINX web server..." --weight=2
 
 # Create a dedicated nginx config
 ynh_add_nginx_config
@@ -108,7 +108,7 @@ ynh_add_nginx_config
 #=================================================
 # ADD A CONFIGURATION
 #=================================================
-ynh_script_progression --message="Adding a configuration file..." --time --weight=1
+ynh_script_progression --message="Adding a configuration file..." --weight=1
 
 ynh_add_config --template="../conf/broker-master.cfg" --destination="/etc/shinken/brokers/broker-master.cfg"
 ynh_add_config --template="../conf/shinken.cfg" --destination="/etc/shinken/shinken.cfg"
@@ -118,35 +118,20 @@ ynh_add_config --template="../conf/webui2.cfg" --destination="/etc/shinken/modul
 #chown $app:$app "$final_path/some_config_file"
 
 #=================================================
-# GENERIC FINALIZATION
-#=================================================
-# SECURE FILES AND DIRECTORIES
-#=================================================
-
-### For security reason, any app should set the permissions to root: before anything else.
-### Then, if write authorization is needed, any access should be given only to directories
-### that really need such authorization.
-
-# Set permissions to app files
-chown "$app":"$app" /var/log/shinken
-
-#=================================================
 # SETUP SSOWAT
 #=================================================
-ynh_script_progression --message="Configuring permissions..." --time --weight=1
+ynh_script_progression --message="Configuring permissions..." --weight=1
 
 # Make app public if necessary
 if [ $is_public -eq 1 ]
 then
-	# Everyone can access the app.
-	# The "main" permission is automatically created before the install script.
 	ynh_permission_update --permission="main" --add="visitors"
 fi
 
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -154,4 +139,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Installation of $app completed" --time --last
+ynh_script_progression --message="Installation of $app completed" --last
