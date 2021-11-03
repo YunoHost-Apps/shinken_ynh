@@ -12,7 +12,7 @@ source /usr/share/yunohost/helpers
 #=================================================
 # LOAD SETTINGS
 #=================================================
-ynh_script_progression --message="Loading installation settings..." --time --weight=1
+ynh_script_progression --message="Loading installation settings..." --weight=1
 
 app=$YNH_APP_INSTANCE_NAME
 
@@ -29,7 +29,7 @@ upgrade_type=$(ynh_check_app_version_changed)
 #=================================================
 # BACKUP BEFORE UPGRADE THEN ACTIVE TRAP
 #=================================================
-ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --time --weight=1
+ynh_script_progression --message="Backing up the app before upgrading (may take a while)..." --weight=1
 
 # Backup the current version of the app
 ynh_backup_before_upgrade
@@ -43,7 +43,7 @@ ynh_abort_if_errors
 #=================================================
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
-ynh_script_progression --message="Ensuring downward compatibility..." --time --weight=1
+ynh_script_progression --message="Ensuring downward compatibility..." --weight=1
 
 #
 # N.B. : the followings setting migrations snippets are provided as *EXAMPLES*
@@ -87,7 +87,7 @@ ynh_system_user_create --username=$app --home_dir="$final_path"
 
 if [ "$upgrade_type" == "UPGRADE_APP" ]
 then
-  ynh_script_progression --message="Upgrading source files..." --time --weight=1
+  ynh_script_progression --message="Upgrading source files..." --weight=1
 
   # Download, check integrity, uncompress and patch the source from app.src
   ynh_setup_source --dest_dir="$final_path"
@@ -100,7 +100,7 @@ chown -R $app:www-data "$final_path"
 #=================================================
 # NGINX CONFIGURATION
 #=================================================
-ynh_script_progression --message="Upgrading NGINX web server configuration..." --time --weight=1
+ynh_script_progression --message="Upgrading NGINX web server configuration..." --weight=1
 
 # Create a dedicated NGINX config
 ynh_add_nginx_config
@@ -108,7 +108,7 @@ ynh_add_nginx_config
 #=================================================
 # UPGRADE DEPENDENCIES
 #=================================================
-ynh_script_progression --message="Upgrading dependencies..." --time --weight=1
+ynh_script_progression --message="Upgrading dependencies..." --weight=1
 
 ynh_install_app_dependencies $pkg_dependencies
 
@@ -117,7 +117,7 @@ ynh_install_app_dependencies $pkg_dependencies
 #=================================================
 # UPDATE A CONFIG FILE
 #=================================================
-ynh_script_progression --message="Updating a configuration file..." --time --weight=1
+ynh_script_progression --message="Updating a configuration file..." --weight=1
 
 ynh_add_config --template="../conf/broker-master.cfg" --destination="/etc/shinken/brokers/broker-master.cfg"
 ynh_add_config --template="../conf/shinken.cfg" --destination="/etc/shinken/shinken.cfg"
@@ -126,7 +126,7 @@ ynh_add_config --template="../conf/webui2.cfg" --destination="/etc/shinken/modul
 #=================================================
 # RELOAD NGINX
 #=================================================
-ynh_script_progression --message="Reloading NGINX web server..." --time --weight=1
+ynh_script_progression --message="Reloading NGINX web server..." --weight=1
 
 ynh_systemd_action --service_name=nginx --action=reload
 
@@ -134,4 +134,4 @@ ynh_systemd_action --service_name=nginx --action=reload
 # END OF SCRIPT
 #=================================================
 
-ynh_script_progression --message="Upgrade of $app completed" --time --last
+ynh_script_progression --message="Upgrade of $app completed" --last
